@@ -35,11 +35,11 @@ function Book(info) {
   const placeholderImage = 'https://www.freeiconspng.com/img/139';
   if(info.imageLinks){
     this.cover = info.imageLinks.thumbnail;
-    console.log(this.cover);
+    // console.log(this.cover);
     let regex = /^http:\/\//ig;
     if(this.cover.match(regex)){
       this.cover = this.cover.replace(/^http:\/\//i, 'https://');
-      console.log(this.cover);
+      // console.log(this.cover);
     }
   }else {
     this.cover = placeholderImage;
