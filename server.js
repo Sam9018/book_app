@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 // testing without data comment this next line out
 app.get('/hello',sayHello);
 function sayHello(request, response) {
-  response.reder('pages/index')
+  response.render('pages/index')
 };
 
 
