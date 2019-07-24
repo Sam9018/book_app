@@ -16,6 +16,7 @@
   <header>Search by Title or Author</header>
 
   <main>
+    <p> Total number of books:<%= results.length%></p>
     <% results.forEach(item => { %>
       <img src=<%=item.images_url%>>
       <p> <%= item.title %> </p>
