@@ -3,19 +3,28 @@
 const express = require('express');
 const superagent = require('superagent');
 const app = express();
+const pg = require('pg');
+
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
+
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('err',err=>console.log(err));
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
-app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
 
-// Render Google Books API
-app.get('/', newSearch)
 
-// testing without data comment this next line out
+// Render Books from database
+app.get('/', getBookshelf);
+//Render books from API
+app.get('/searchPage',newSearch);
+
+// new routes
 app.post('/searches', createSearch);
 
 
@@ -23,29 +32,45 @@ app.post('/searches', createSearch);
 
 app.get('*', (request, response) => response.status(404).send('Route does not work'));
 
-// Making images Safe HTTPS
-// function https = 
+//function to get books from sql
+function getBookshelf(request,response){
+  let SQL = 'SELECT * FROM books';
+  return client.query(SQL)
+    .then (results => response.render('../views/pages/index.ejs', {results: results.rows}))
+    .catch(err=>console.log('cannot get data from database',err));
+}
 
 
+//get books from api function
 function newSearch(request, response) {
-  response.render('pages/index')
+  response.render('../views/pages/searches/new.ejs');
 };
 
 function Book(info) {
+  this.authors = info.authors;
+  this.title = info.title;
+  this.isbn = info.industryIdentifiers[0].identifier;
   const placeholderImage = 'https://www.freeiconspng.com/img/139';
   if(info.imageLinks){
     this.cover = info.imageLinks.thumbnail;
     // console.log(this.cover);
     let regex = /^http:\/\//ig;
     if(this.cover.match(regex)){
+      // Making images Safe HTTPS
       this.cover = this.cover.replace(/^http:\/\//i, 'https://');
       // console.log(this.cover);
     }
   }else {
     this.cover = placeholderImage;
   }
-  this.title = info.title;
-  this.authors = info.authors;
+  this.description = info.description;
+  this.bookshelf = '';
+}
+
+Book.prototype.save = function(){
+  let SQL = `INSERT INTO books(author, title, isbn, images_url, description, bookshelf)VALUES($1,$2,$3,$4,$5,$6)RETURINING id`;
+  let values = Object.values(this);
+  return clientInformation.query(SQL,values);
 }
 
 function createSearch(request, response) {
@@ -63,5 +88,5 @@ function createSearch(request, response) {
   }
 
 
-
+  app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
 

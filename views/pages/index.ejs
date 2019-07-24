@@ -16,22 +16,14 @@
   <header>Search by Title or Author</header>
 
   <main>
-    <form action="/searches" method="post">
-      <input type="text" id="search" name="search" placeholder="Enter a Title or Author" required>
-      <fieldset>
-        <label for="title">
-          <span>Title</span>
-            <input type="radio" name='search' value="title" required>
-        </label>
-      </fieldset>
-      <fieldset>
-        <label for="author">
-          <span>Author</span>
-            <input type="radio" name='search' value="author" required>
-        </label>
-      </fieldset>
-      <button type="submit">Search the Google Books API</button>
-    </form>
+    <% results.forEach(item => { %>
+      <img src=<%=item.images_url%>>
+      <p> <%= item.title %> </p>
+      <p> <%= item.author %> </p>
+      <p> <%= item.description%> <p>
+      <p> <%= item.isbn%> <p>
+      <p> <%= item.bookshelf%> </p>   
+    <% }) %>
 
   </main>
   
