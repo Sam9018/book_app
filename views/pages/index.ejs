@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href ="/styles/reset.css">
-  <link rel="stylesheet" href ="/styles/base.css">
-  <link rel="stylesheet" href ="/styles/icons.css">
-  <link rel="stylesheet" href ="/styles/layout.css">
-  <link rel="stylesheet" href ="/styles/modules.css">
-  <title>Book Colection</title>
+   <%- include('../layout/head') %>
 </head>
 <body>
-  <nav>Best Books!</nav>
-  <header>Search by Title or Author</header>
+  
+  <header>
+      <%- include('../layout/header') %>
+  </header>
 
   <main>
     <p> Total number of books:<%= results.length%></p>
     <% results.forEach(item => { %>
-      <img src=<%=item.images_url%>>
-      <p> <%= item.title %> </p>
-      <p> <%= item.author %> </p>
-      <p> <%= item.description%> <p>
-      <p> <%= item.isbn%> <p>
-      <p> <%= item.bookshelf%> </p>   
+      <%- include('./books/detail',{item:item}) %>
     <% }) %>
-
   </main>
   
 </body>
 <footer>
-  
+  <%- include('../layout/footer') %>
 </footer>
 
 </html>
