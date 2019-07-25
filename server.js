@@ -34,6 +34,10 @@ app.post('/searches', createSearch);
 
 app.get('*', (request, response) => response.status(404).send('Route does not work'));
 
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 //function to get books from sql
 function getBookshelf(request,response){
   let SQL = 'SELECT * FROM books';

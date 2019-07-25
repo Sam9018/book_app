@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+
 *{
     box-sizing: border-box;
 }
 
 header p{
-    margin-top: 10px;    
+    margin-top: 10px;  
+    font-family: 'Shadows Into Light', cursive;  
+    font-size: 4em;
 }
 
 .menu-icon{
     float:right;
     height: 40px;
+}
+
+button {
+    background-color: black;
+    color: white;
 }
