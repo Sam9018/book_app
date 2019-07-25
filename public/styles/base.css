@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+
 body {
   background-color: lightgray;
   color: black;
@@ -10,11 +12,6 @@ body {
 
 input {
   background-color: rgb(226, 223, 218);
-}
-
-button {
-  background-color: black;
-  color: white;
 }
 
 nav {
