@@ -1,26 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href ="/styles/reset.css">
-  <link rel="stylesheet" href ="/styles/base.css">
-  <link rel="stylesheet" href ="/styles/icons.css">
-  <link rel="stylesheet" href ="/styles/layout.css">
-  <link rel="stylesheet" href ="/styles/modules.css">
-  <title>Book Colection</title>
+    <%- include('../../layout/head') %>
 </head>
 <body>
-  <nav>Best Books!</nav>
-  <header>Search Result</header>
-  <% searchResults.forEach(item => { %>
-    <img src=<%= item.cover %>>
-    <p> <%= item.title %> </p>
-    <p> <%= item.author %> </p>
-  <% }) %>
+  <header><%- include('../../layout/header') %></header>
+
   <main>
-    
+      <% results.forEach(item => { %>
+      <%- include('../books/detail',{item:item}) %>
+      <%})%>
   </main>
   
 </body>

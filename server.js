@@ -19,10 +19,12 @@ app.set('view engine', 'ejs');
 
 
 
-// Render Books from database
-app.get('/', getBookshelf);
+// main page to search
+app.get('/searches', newSearch);
 //Render books from API
-app.get('/searchPage',newSearch);
+app.get('/',getBookshelf);
+//detail page
+app.get('/books/:id',getDetail)
 
 // new routes
 app.post('/searches', createSearch);
@@ -52,16 +54,16 @@ function Book(info) {
   this.isbn = info.industryIdentifiers[0].identifier;
   const placeholderImage = 'https://www.freeiconspng.com/img/139';
   if(info.imageLinks){
-    this.cover = info.imageLinks.thumbnail;
-    // console.log(this.cover);
+    this.images_url = info.imageLinks.thumbnail;
+    // console.log(this.images_url);
     let regex = /^http:\/\//ig;
-    if(this.cover.match(regex)){
+    if(this.images_url.match(regex)){
       // Making images Safe HTTPS
-      this.cover = this.cover.replace(/^http:\/\//i, 'https://');
-      // console.log(this.cover);
+      this.images_url = this.images_url.replace(/^http:\/\//i, 'https://');
+      // console.log(this.images_url);
     }
   }else {
-    this.cover = placeholderImage;
+    this.images_url = placeholderImage;
   }
   this.description = info.description;
   this.bookshelf = '';
@@ -84,9 +86,20 @@ function createSearch(request, response) {
   console.log(url);
   superagent.get(url) 
     .then(apiResponse => apiResponse.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
-    .then(results => response.render('../views/pages/searches/show', { searchResults: results }));  
+    .then(results => response.render('../views/pages/searches/show', { results: results }));  
   }
 
+//get the details from one book
+function getDetail(request,response){
+  let SQL = 'SELECT * FROM books WHERE id=$1';
+  let values = [request.params.id];
+  return client.query(SQL,values)
+    .then(result =>{
+      return response.render('../views/pages/books/detail',{book: result.row[0]});
+    })
+    .catch(err=>console.log('get detail function is not working.',err));
+}  
 
-  app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
+
+app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
 
