@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Amiri&display=swap');
 
 body {
   background-color: lightgray;
   color: black;
   text-align: center;
+  font-family: 'Amiri', serif;
 }
 
 #search {

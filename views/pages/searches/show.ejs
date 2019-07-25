@@ -7,10 +7,50 @@
   <header><%- include('../../layout/header') %></header>
 
   <main>
-      <% results.forEach(item => { %>
-      <%- include('../books/detail',{item:item}) %>
-      <%})%>
+      <% results.forEach((item,id) => { %>
+        <%- include('../books/detail',{item:item, id:id}) %>
+        <button 
+            value = "<%=id %>" 
+            class="dropForm"
+            type="button"
+            name="select">
+              Select this BooK
+          </button>
+        <form
+          id = '<%=id %>'
+          class='hide'
+          action="/books"
+          method="post">
+            <input
+              type="text"
+              name="title"
+              value="<%= item.title %>"
+              required />
+            <input
+              type="text"
+              name="author"
+              value="<%= item.author %>"
+              required />
+            <input
+              type="text"
+              name="isbn"
+              value="<%= item.isbn %>" />
+            <input
+              type="text"
+              name="image_url"
+              value="<%=item.image_url%>" />
+            <textarea 
+              name="description"
+              value = "<%=item.description%>">
+            </textarea>
+            <input type="text" name="bookshelf" placeholder=" Enter a bookshelf name" required />
+            <button class = "show" type="submit">Add to database</button>
+        </form>  
+      <% }) %>
+
+
   </main>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  
+  <script src="./js/app.js"></script>
 </body>
 </html>

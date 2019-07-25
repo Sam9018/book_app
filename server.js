@@ -4,6 +4,7 @@ const express = require('express');
 const superagent = require('superagent');
 const app = express();
 const pg = require('pg');
+const methodOverride = require('method-override');
 
 require('dotenv').config();
 
@@ -34,9 +35,6 @@ app.post('/searches', createSearch);
 
 app.get('*', (request, response) => response.status(404).send('Route does not work'));
 
-process.on('unhandledRejection', (reason, p) => {
-  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-});
 
 //function to get books from sql
 function getBookshelf(request,response){
@@ -90,7 +88,11 @@ function createSearch(request, response) {
   console.log(url);
   superagent.get(url) 
     .then(apiResponse => apiResponse.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
-    .then(results => response.render('../views/pages/searches/show', { results: results }));  
+    .then(results => {
+      console.log('api response map : ', results);
+      response.render('../views/pages/searches/show', { results: results })
+    })
+    .catch(err=>console.log('something in createSearch went wrong'));
   }
 
 //get the details from one book
@@ -103,6 +105,7 @@ function getDetail(request,response){
     })
     .catch(err=>console.log('get detail function is not working.',err));
 }  
+  
 
 
 app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
