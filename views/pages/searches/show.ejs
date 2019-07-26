@@ -21,6 +21,11 @@
           class='hide'
           action="/books"
           method="post">
+          <input
+          type="text"
+          name="images_url"
+          value="<%= item.images_url %>"
+           />
             <input
               type="text"
               name="title"
@@ -28,20 +33,19 @@
               required />
             <input
               type="text"
-              name="author"
-              value="<%= item.author %>"
+              name="authors"
+              value="<%= item.authors %>"
               required />
             <input
               type="text"
               name="isbn"
               value="<%= item.isbn %>" />
-            <input
-              type="text"
-              name="image_url"
-              value="<%=item.image_url%>" />
             <textarea 
+              rows ="5"
+              cols="30"
               name="description"
-              value = "<%=item.description%>">
+              value = "<%=item.description %>">
+              <%=item.description %>
             </textarea>
             <input type="text" name="bookshelf" placeholder=" Enter a bookshelf name" required />
             <button class = "show" type="submit">Add to database</button>

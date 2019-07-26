@@ -5,10 +5,15 @@
     box-sizing: border-box;
 }
 
+h1{
+    font-family: 'Shadows Into Light', cursive;  
+    font-size: 4em; 
+}
+
 header p{
     margin-top: 10px;  
     font-family: 'Shadows Into Light', cursive;  
-    font-size: 4em;
+    font-size: 2em;
 }
 
 .menu-icon{
@@ -28,4 +33,8 @@ button {
 
 form button{
     display: inline-block;
+}
+
+form input{
+    display: block;
 }

@@ -29,6 +29,7 @@ app.get('/books/:id',getDetail)
 
 // new routes
 app.post('/searches', createSearch);
+app.post('/books',saveBook);
 
 
 // Error Function
@@ -51,9 +52,9 @@ function newSearch(request, response) {
 };
 
 function Book(info) {
-  this.authors = info.authors;
-  this.title = info.title;
-  this.isbn = info.industryIdentifiers[0].identifier;
+  this.authors = info.authors ? info.authors[0] : "no authors";
+  this.title = info.title ? info.title : "no title";
+  this.isbn = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : "no isbn";
   const placeholderImage = 'https://www.freeiconspng.com/img/139';
   if(info.imageLinks){
     this.images_url = info.imageLinks.thumbnail;
@@ -71,12 +72,6 @@ function Book(info) {
   this.bookshelf = '';
 }
 
-Book.prototype.save = function(){
-  let SQL = `INSERT INTO books(author, title, isbn, images_url, description, bookshelf)VALUES($1,$2,$3,$4,$5,$6)RETURINING id`;
-  let values = Object.values(this);
-  return clientInformation.query(SQL,values);
-}
-
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
@@ -92,7 +87,7 @@ function createSearch(request, response) {
       console.log('api response map : ', results);
       response.render('../views/pages/searches/show', { results: results })
     })
-    .catch(err=>console.log('something in createSearch went wrong'));
+    .catch(err=>console.log( err, 'something in createSearch went wrong'));
   }
 
 //get the details from one book
@@ -101,11 +96,29 @@ function getDetail(request,response){
   let values = [request.params.id];
   return client.query(SQL,values)
     .then(result =>{
-      return response.render('../views/pages/books/detail',{book: result.row[0]});
+      console.log('get detail response', result);
+      return response.render('../views/pages/books/show',{item: result.rows[0]});
     })
     .catch(err=>console.log('get detail function is not working.',err));
 }  
-  
+
+function saveBook(request,response){
+  let {authors,title,isbn,images_url,description,bookshelf} = request.body;
+  let SQL = `INSERT INTO books(authors, title, isbn, images_url, description, bookshelf)VALUES($1,$2,$3,$4,$5,$6)`;
+  let values = [authors, title, isbn, images_url, description, bookshelf];
+  return client.query(SQL,values)
+    .then(()=>{
+      SQL = `SELECT * FROM books WHERE isbn=$1`;
+      values = [request.body.isbn];
+      return client.query(SQL,values)
+        .then(result=> {
+          console.log('from db', result.rows[0]);
+         return response.redirect(`/books/${result.rows[0].id}`)
+        
+        })
+        .catch(err=>{console.log('something wrong with saveBook function')});
+    })
+}
 
 
 app.listen(PORT, () => console.log(`Listening on : ${PORT}`));
