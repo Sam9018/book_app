@@ -12,7 +12,9 @@
   <main>
     <p> Total number of books:<%= results.length%></p>
     <% results.forEach(item => { %>
+      <section class="bookDisplay">
       <%- include('./books/detail',{item:item}) %>
+      </section>
     <% }) %>
   </main>
   
