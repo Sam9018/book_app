@@ -8,6 +8,7 @@
 
   <main>
       <% results.forEach((item,id) => { %>
+        <section class="bookDisplay">
         <%- include('../books/detail',{item:item, id:id}) %>
         <button 
             value = "<%=id %>" 
@@ -16,6 +17,7 @@
             name="select">
               Select this BooK
           </button>
+        </section>  
         <form
           id = '<%=id %>'
           class='hide'
