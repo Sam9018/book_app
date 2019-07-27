@@ -20,3 +20,13 @@ $('.viewDetail').on('click',function(event){
 $('.updateDetail').on('click',function(event){
     $().toggleClass('hide');
 })
+
+$('.deleteBook').on('click', (event) => { 
+    const $id = $(event.target);
+    const value = $id.val();
+    $.ajax({
+        url: `/books/${value}`,
+        type: 'DELETE',
+        success: function(result) {window.location.href = '/'}
+    })
+})

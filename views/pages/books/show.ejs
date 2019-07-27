@@ -15,7 +15,7 @@
         </button>
 
         <%- include('./edit', {id: item.id, item:item, formAction:'update'}) %>
-        <button class="deleteBook" value="delete" name="delete">
+        <button class="deleteBook" value = "<%=item.id %>" name="delete">
                 Delete Book
         </button>    
     </main>
