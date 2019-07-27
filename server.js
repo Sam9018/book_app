@@ -147,7 +147,7 @@ function deleteBook(request,response){
   let values = [request.params.id];
 
   return client.query(SQL, values)
-    .then(response.redirect('/'))
+    .then(result => response.send(result))
     .catch(err=>console.log(err,'delete function is not working'));
 }
 
