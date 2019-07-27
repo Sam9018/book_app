@@ -19,7 +19,8 @@ input {
 nav {
   background-color: black;
   color: white;
-  font-size: 3em;
+  margin: 2px;
+  font-size: 1.5em;
 }
 
 header {
