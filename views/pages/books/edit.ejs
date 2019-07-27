@@ -1,0 +1,12 @@
+<form id = '<%=id %>' class='hide form' action="/books/<%= 'update' === formAction ? item.id: '' %>" method="post">
+    <input type="hidden" name="_method" value="<%= 'update' === formAction ?'put' : 'post' %>">
+    <input type="text" name="images_url" value="<%= item.images_url %>" />
+    <input type="text" name="title" value="<%= item.title %>" required />
+    <input type="text" name="authors" value="<%= item.authors %>" required />
+    <input type="text" name="isbn" value="<%= item.isbn %>" />
+    <textarea rows ="5" cols="30" name="description" value = "<%=item.description %>">
+        <%=item.description %>
+    </textarea>
+    <input type="text" name="bookshelf" placeholder="Enter a bookshelf name" required />  
+    <button class = "show" type="submit">Add to database</button>
+</form>  

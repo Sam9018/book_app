@@ -18,6 +18,15 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
+//check method
+app.use(methodOverride((request,response)=>{
+  if(request.body && typeof request.body === 'object' && '_method' in request.body){
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}))
+
 
 
 // main page to search
@@ -30,6 +39,8 @@ app.get('/books/:id',getDetail)
 // new routes
 app.post('/searches', createSearch);
 app.post('/books',saveBook);
+app.put('/books/:id',updateBook);
+app.delete('/books/:id',deleteBook);
 
 
 // Error Function
@@ -92,6 +103,7 @@ function createSearch(request, response) {
 
 //get the details from one book
 function getDetail(request,response){
+  console.log(request.params)
   let SQL = 'SELECT * FROM books WHERE id=$1';
   let values = [request.params.id];
   return client.query(SQL,values)
@@ -118,6 +130,25 @@ function saveBook(request,response){
         })
         .catch(err=>{console.log('something wrong with saveBook function')});
     })
+}
+
+function updateBook(request,response){
+  let {title, author, isbn, image_url, description, bookshelf} = request.body;
+  let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7;`;
+  let values= [title, author, isbn, image_url, description, bookshelf, request.params.id];
+
+  client.query(SQL, values)
+    .then(response.redirect(`/books/${request.params.id}`))
+    .catch(err=> console.log(err,'update function is not working'));
+}
+
+function deleteBook(request,response){
+  let SQL = 'DELETE FROM books WHERE id=$1';
+  let values = [request.params.id];
+
+  return client.query(SQL, values)
+    .then(response.redirect('/'))
+    .catch(err=>console.log(err,'delete function is not working'));
 }
 
 

@@ -11,15 +11,15 @@ main{
     align-items: center;
 }
 
-header{
+/* header{
     height:10%;
-}
+} */
 
-.bookDisplay{
+/* .bookDisplay{
     border:1px white dotted;
     height: 20%;
     width:80%;
-    margin:5px;
+    margin:auto;
 }
 
 .descriptionBox{
@@ -27,9 +27,9 @@ header{
     width:70%;
     overflow:auto;
     margin: auto;
-}
+} */
 
-@media screen and (min-width:768px){
+/* @media screen and (min-width:768px){
     body{
         display: flex;
         flex-direction: column;
@@ -51,4 +51,7 @@ header{
     .descriptionBox{
         overflow: auto;
     }
-}
+    button{
+        height: 5px;
+    }
+} */

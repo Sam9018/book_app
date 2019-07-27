@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+body{
+    text-align: center;
+}
+
 
 h1{
     font-family: 'Shadows Into Light', cursive;  
@@ -19,7 +23,7 @@ header p{
     margin-left:8px; 
 }
 
-img{
+.bookCover{
     width:140px;
     margin: auto;
 }
@@ -32,6 +36,7 @@ img{
 button {
     background-color: black;
     color: white;
+    height: 20px;
 }
 
 .hide{

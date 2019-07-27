@@ -4,10 +4,25 @@
         <%- include('../../layout/head') %>
 </head>
 <body>
-    <nav> <%= item.length%> Saved Books</nav>
+    <header><%- include('../../layout/header') %></header>
+    <nav> <%= item.length %> Saved Books</nav>
     <main>
-        <%- include('./detail') %>
-        
+        <%- include('./detail',{item:item, formAction:'create'}) %>
+        <button value = "<%=item.id %>" 
+                class="dropForm"
+                name="update">
+                Update Details
+        </button>
+
+        <%- include('./edit', {id: item.id, item:item, formAction:'update'}) %>
+        <button class="deleteBook" value="delete" name="delete">
+                Delete Book
+        </button>    
     </main>
+
+    <footer>
+            <%- include('../../layout/footer') %>
+    </footer>
+
 </body>
 </html>

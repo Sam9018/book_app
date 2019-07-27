@@ -7,13 +7,18 @@
   
   <header>
       <%- include('../layout/header') %>
+      <p class="totalBook"> Total number of books:<%= results.length%></p>
   </header>
 
   <main>
-    <p> Total number of books:<%= results.length%></p>
-    <% results.forEach(item => { %>
+    <% results.forEach((item,idx) => { %>
       <section class="bookDisplay">
-      <%- include('./books/detail',{item:item}) %>
+          <img class="bookCover" src="<%= item.images_url %>">
+          <p> <%= item.title %> </p>
+          <p> <%= item.authors %> </p>
+      <button type="button" value="<%= results[idx].id %>" class="viewDetail" name="view">
+        View Details
+      </button>  
       </section>
     <% }) %>
   </main>
